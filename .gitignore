@@ -18,5 +18,6 @@ gradle/wrapper/gradle-wrapper.jar
 # IDE settings
 .vscode/
 
-# SeaLights agent files
+# SeaLights agent and build id files
 sealights/
+buildSessionId.txt

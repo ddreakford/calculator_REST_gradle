@@ -18,7 +18,7 @@ rm sealights-java-latest.zip
 # create the SeaLights build session
 java -jar sealights/sl-build-scanner.jar -gradle \
     -configfile sl-gradle.json \
-    -workspacepath app
+    -workspacepath .
 
 # Build and run unit tests
 #
@@ -28,7 +28,7 @@ gradle clean build
 
 # Restore the build.gradle file
 java -jar sealights/sl-build-scanner.jar -restoreGradle \
-    -workspacepath app
+    -workspacepath .
 
 # Manual tests
 #
@@ -39,18 +39,7 @@ java -jar sealights/sl-test-listener.jar start \
     -testStage "Manual Tests"
 #
 # Start the app with the test listener attached as a java agent
-# java -cp app/build/libs/app.jar calculator.App
 #
-java -cp app/build/libs/app.jar \
-    -javaagent:sealights/sl-test-listener.jar \
-    -Dsl.tokenFile=sealights/sltoken-dev-cs.txt \
-    -Dsl.buildSessionIdFile=buildSessionId.txt \
-    -Dsl.tags="Calculator-Terminal" \
-    -Dsl.testStage="Manual Tests" \
-    -Dsl.filesStorage=sealights \
-    calculator.App
+
 #
 # End the test stage
-java -jar sealights/sl-test-listener.jar end \
-    -tokenfile sealights/sltoken-dev-cs.txt \
-    -buildsessionidfile buildSessionId.txt

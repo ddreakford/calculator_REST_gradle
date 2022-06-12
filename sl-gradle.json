@@ -1,0 +1,20 @@
+{
+    "tokenFile": "sealights/sltoken-dev-cs.txt",
+    "createBuildSessionId": true,
+    "appName": "Calculator-RESTService-DD",
+    "branchName": "main",
+    "buildName": "SL_Timestamp",
+    "packagesIncluded": "*io.sealights.samples.gradle.java.springboot*",
+    "packagesExcluded": "",
+    "filesIncluded": "*.class",
+    "filesExcluded": "*Test.class*",
+    "recursive": true,
+    "includeResources": true,
+    "testTasksAndStages": {"test":"Unit Tests", "junitPlatformTest":"Unit Tests", "integrationTest":"Integration Tests"},
+    "labId": null,
+    "executionType": "full",
+    "logEnabled": false,
+    "logDestination": "console",
+    "logLevel": "off",
+    "logFolder": "/tmp"
+  }
