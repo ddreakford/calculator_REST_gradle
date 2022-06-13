@@ -1,4 +1,4 @@
-package io.sealights.samples.gradle.java.springboot;
+package com.slsamples.gradle.java.springboot;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
