@@ -4,7 +4,7 @@
     "appName": "Calculator-RESTService-DD",
     "branchName": "main",
     "buildName": "SL_Timestamp",
-    "packagesIncluded": "*io.sealights.samples.gradle.java.springboot*",
+    "packagesIncluded": "*com.slsamples.gradle.java.springboot*",
     "packagesExcluded": "",
     "filesIncluded": "*.class",
     "filesExcluded": "*Test.class*",
