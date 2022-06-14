@@ -36,12 +36,13 @@ java -jar sealights/sl-build-scanner.jar -restoreGradle \
 # Report the tests via the Chrome plugin or SL UI.
 #
 export JAVA_OPTS="-javaagent:sealights/sl-test-listener.jar -Dsl.tokenFile=sealights/sltoken-dev-cs.txt -Dsl.buildSessionIdFile=buildSessionId.txt -Dsl.labId=DevLaptop -Dsl.tags=Calculator-REST -Dsl.testStage='Manual Tests'"
+gradle bootRun
 
-java -jar build/libs/rest-calculator-0.0.1-SNAPSHOT.jar \
-    com.slsamples.gradle.java.springboot.Application \
-    -javaagent:sealights/sl-test-listener.jar \
-    -Dsl.tokenFile=sealights/sltoken-dev-cs.txt \
-    -Dsl.buildSessionIdFile=buildSessionId.txt \
-    -Dsl.labId="DevLaptop" \
-    -Dsl.tags="SBTomcat" \
-    -Dsl.testStage="Manual Tests"
+# java -jar build/libs/rest-calculator-0.0.1-SNAPSHOT.jar \
+#     com.slsamples.gradle.java.springboot.Application \
+#     -javaagent:sealights/sl-test-listener.jar \
+#     -Dsl.tokenFile=sealights/sltoken-dev-cs.txt \
+#     -Dsl.buildSessionIdFile=buildSessionId.txt \
+#     -Dsl.labId="DevLaptop" \
+#     -Dsl.tags="Calculator_REST" \
+#     -Dsl.testStage="Manual Tests"
