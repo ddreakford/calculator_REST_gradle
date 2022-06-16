@@ -11,10 +11,11 @@
     "recursive": true,
     "includeResources": true,
     "testTasksAndStages": {"test":"Unit Tests", "junitPlatformTest":"Unit Tests", "integrationTest":"Integration Tests"},
-    "labId": null,
+    "labId": "DevLaptop",
     "executionType": "full",
-    "logEnabled": false,
-    "logDestination": "console",
-    "logLevel": "off",
-    "logFolder": "/tmp"
+    "logEnabled": true,
+    "logLevel": "INFO",
+    "logToFile": true,
+    "logToConsole": true,
+    "logFolder": "sealights"
   }
