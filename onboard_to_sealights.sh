@@ -42,11 +42,10 @@ gradle bootRun
 
 # If starting the server directly via jvm from the command line
 
-    java -jar -javaagent:sealights/sl-test-listener.jar \
-        -Dsl.labId="DD-Dev-Laptop" \
-        -Dsl.tags="Calculator_REST_Gradle" \
-        -Dsl.log.level=info \
-        -Dsl.log.toConsole=true \
-        -Dsl.log.toFile=true -Dsl.log.folder=sealights \
-        build/libs/rest-calculator-0.0.1-SNAPSHOT.jar \
-        com.slsamples.gradle.java.springboot.Application
+java -jar -javaagent:sealights/sl-test-listener.jar \
+    -Dsl.tags="Calculator_REST_Gradle" \
+    -Dsl.log.level=info \
+    -Dsl.log.toConsole=true \
+    -Dsl.log.toFile=true -Dsl.log.folder=sealights \
+    build/libs/rest-calculator-0.0.1-SNAPSHOT.jar \
+    com.slsamples.gradle.java.springboot.Application

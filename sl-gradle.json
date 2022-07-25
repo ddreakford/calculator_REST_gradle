@@ -12,7 +12,6 @@
     "includeResources": true,
     "testTasksAndStages": {"test":"Unit Tests", "junitPlatformTest":"Unit Tests", "integrationTest":"Integration Tests"},
     "executionType": "full",
-    "labId" : "DD-Dev-Laptop",
     "logEnabled": true,
     "logLevel": "INFO",
     "logToFile": true,
