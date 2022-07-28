@@ -34,14 +34,14 @@ java -jar sealights/sl-build-scanner.jar -restoreGradle \
 #
 # Start the app with the test listener attached as a java agent.
 # Report the tests via the Chrome plugin or SL UI.
-#
-# If using Gradle to start the server
+
+# --- If using Gradle to start the server ---
 # export JAVA_OPTS="-javaagent:sealights/sl-test-listener.jar -Dsl.tokenFile=sealights/sltoken-dev-cs.txt -Dsl.buildSessionIdFile=buildSessionId.txt -Dsl.tags=Calculator-REST -Dsl.testStage=ManualTests"
 export JAVA_OPTS="-javaagent:sealights/sl-test-listener.jar -Dsl.labId=DD-Dev-Laptop -Dsl.tags=Calculator-REST"
 gradle bootRun
 
-# If starting the server directly via jvm from the command line
-
+# --- If starting the server directly via command line ===
+#
 java -jar -javaagent:sealights/sl-test-listener.jar \
     -Dsl.tags="Calculator_REST_Gradle" \
     -Dsl.log.level=info \
