@@ -3,10 +3,9 @@
 
 # Download the SeaLights Java agent
 cd $PROJECT_ROOT_DIR
-rm -rf sealights
-mkdir sealights
-wget -nv https://agents.sealights.co/sealights-java/sealights-java-latest.zip
-unzip -o -d sealights sealights-java-latest.zip
+rm -rf sealights && mkdir sealights
+wget -nv https://agents.sealights.co/sealights-java/sealights-java-latest.zip && \
+    unzip -o -d sealights sealights-java-latest.zip
 cp $AGENT_TOKEN_FILE sealights/
 rm sealights-java-latest.zip
 
