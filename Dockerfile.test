@@ -1,0 +1,17 @@
+# Create image for testing with monitoring by SeaLights
+
+# Start with the application image
+FROM        dwaynedreakford/calculator_rest:2.0
+
+# Add sealights java agent and supporting script
+ENV         LIBS_DIR="/usr/local/lib"
+COPY        sealights/* ${LIBS_DIR}/sealights/
+COPY        scan_java_container.sh ${LIBS_DIR}/sealights/
+
+# Set variables used by the script to scan and start the app
+ENV         APP_NAME="calculator_rest_container"
+ENV         PACKAGE_PREFIX="com.slsamples.gradle.java.springboot"
+
+# This script scans the app and then starts the app with
+# the SeaLights test listener configured as a java agent.
+ENTRYPOINT ${LIBS_DIR}/sealights/scan_java_container.sh
