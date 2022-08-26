@@ -13,10 +13,10 @@ cd $PROJECT_ROOT_DIR
 rm -rf sealights && mkdir sealights
 wget -nv https://agents.sealights.co/sealights-java/sealights-java-latest.zip && \
     unzip -o -d sealights sealights-java-latest.zip
+rm sealights-java-latest.zip
 
 # Add the agent token
 cp $AGENT_TOKEN_FILE sealights/
-rm sealights-java-latest.zip
 
 # Build the image
 # For simplicity, the SL Java Agent is added to the image
