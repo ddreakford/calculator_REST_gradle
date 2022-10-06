@@ -34,7 +34,7 @@ pipeline {
                     |    "createBuildSessionId": true,
                     |    "appName": "Calculator-REST-Jenkins-DD",
                     |    "branchName": "main",
-                    |    "buildName": "2.${BUILD_NUMBER}",
+                    |    "buildName": "2.SL_Timestamp",
                     |    "packagesIncluded": "*com.slsamples.gradle.java.springboot*",
                     |    "packagesExcluded": "",
                     |    "filesIncluded": "*.class",
