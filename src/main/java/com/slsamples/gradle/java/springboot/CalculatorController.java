@@ -92,4 +92,8 @@ public class CalculatorController {
     private double divide(double num1, double num2) {
         return num1 / num2;
     }
+
+    private double unusedoperation(double num1, double num2) {
+        return 0;
+    }
 }
