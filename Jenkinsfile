@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        SL_TOKEN = credentials('SL_AGENT_TOKEN')
-    }
-
     parameters {
         string(name: 'BRANCH', defaultValue: 'main', description: 'The branch to locally clone, build and onboard to SeaLights')
     }
