@@ -19,17 +19,17 @@ pipeline {
         stage('Install/Configure SeaLights agent') {
             steps {
                 echo "${STAGE_NAME}"
-
-                sh '''
-                    rm -rf sealights && mkdir sealights
-                    wget -nv https://agents.sealights.co/sealights-java/sealights-java-latest.zip
-                    unzip -o -d sealights sealights-java-latest.zip
-                    rm sealights-java-latest.zip
-                    echo "SeaLights agent version is:" `cat sealights/sealights-java-version.txt` "\n"
-                    echo -n "$SL_TOKEN" > sealights/sltoken.txt
-                    ls -l sealights
-                '''
-
+                withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
+                    sh '''
+                        rm -rf sealights && mkdir sealights
+                        wget -nv https://agents.sealights.co/sealights-java/sealights-java-latest.zip
+                        unzip -o -d sealights sealights-java-latest.zip
+                        rm sealights-java-latest.zip
+                        echo "SeaLights agent version is:" `cat sealights/sealights-java-version.txt` "\n"
+                        echo -n "$SL_TOKEN" > sealights/sltoken.txt
+                        ls -l sealights
+                    '''
+                }
                 sh '''
                     cat sealights/sltoken.txt
                 '''
