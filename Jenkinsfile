@@ -19,6 +19,7 @@ pipeline {
         stage('Install/Configure SeaLights agent') {
             steps {
                 echo "${STAGE_NAME}"
+
                 sh '''
                     rm -rf sealights && mkdir sealights
                     wget -nv https://agents.sealights.co/sealights-java/sealights-java-latest.zip
@@ -28,6 +29,7 @@ pipeline {
                     echo -n "$SL_TOKEN" > sealights/sltoken.txt
                     ls -l sealights
                 '''
+
                 writeFile file: 'slgradle.json', text: '''\
                     |{
                     |    "tokenFile": "sealights/sltoken.txt",
@@ -49,8 +51,14 @@ pipeline {
                     |    "logToConsole": true
                     |}
                 '''.stripMargin().stripIndent()
+
                 sh '''
                     cat slgradle.json
+                    echo "----------------------------"
+                    java -jar sealights/sl-build-scanner.jar -gradle -configfile sl-gradle.json -workspacepath .
+                    cat build.gradle
+                    echo "----------------------------"
+                    gradle clean build
                 '''
             }
         }
