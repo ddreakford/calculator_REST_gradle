@@ -30,7 +30,7 @@ pipeline {
                     ls -l sealights
                 '''
 
-                writeFile file: 'slgradle.json', text: '''\
+                writeFile file: 'slgradle-gen.json', text: '''\
                     |{
                     |    "tokenFile": "sealights/sltoken.txt",
                     |    "createBuildSessionId": true,
@@ -53,9 +53,9 @@ pipeline {
                 '''.stripMargin().stripIndent()
 
                 sh '''
-                    cat slgradle.json
+                    cat slgradle-gen.json
                     echo "----------------------------"
-                    java -jar sealights/sl-build-scanner.jar -gradle -configfile sl-gradle.json -workspacepath .
+                    java -jar sealights/sl-build-scanner.jar -gradle -configfile slgradle-gen.json -workspacepath .
                     cat build.gradle
                     echo "----------------------------"
                     gradle clean build
