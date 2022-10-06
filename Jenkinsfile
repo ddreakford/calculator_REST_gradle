@@ -26,7 +26,7 @@ pipeline {
                         unzip -o -d sealights sealights-java-latest.zip
                         rm sealights-java-latest.zip
                         echo "SeaLights agent version is:" `cat sealights/sealights-java-version.txt` "\n"
-                        echo -n "$SL_TOKEN" > sealights/sltoken.txt
+                        echo -n $SL_TOKEN > sealights/sltoken.txt
                         ls -l sealights
                     '''
                 }
@@ -40,7 +40,7 @@ pipeline {
                     |    "createBuildSessionId": true,
                     |    "appName": "Calculator-REST-Jenkins-DD",
                     |    "branchName": "main",
-                    |    "buildName": "2.SL_Timestamp",
+                    |    "buildName": "2.$BUILD_NUMBER",
                     |    "packagesIncluded": "*com.slsamples.gradle.java.springboot*",
                     |    "packagesExcluded": "",
                     |    "filesIncluded": "*.class",
