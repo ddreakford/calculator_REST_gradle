@@ -28,6 +28,30 @@ pipeline {
                     echo -n "$SL_TOKEN" > sealights/sltoken.txt
                     ls -l sealights
                 '''
+                writeFile file: 'slgradle.json', text: '''\
+                    |{
+                    |    "tokenFile": "sealights/sltoken-dev-cs.txt",
+                    |    "createBuildSessionId": true,
+                    |    "appName": "Calculator-REST-Jenkins-DD",
+                    |    "branchName": "main",
+                    |    "buildName": "SL_Timestamp",
+                    |    "packagesIncluded": "*com.slsamples.gradle.java.springboot*",
+                    |    "packagesExcluded": "",
+                    |    "filesIncluded": "*.class",
+                    |    "filesExcluded": "*Test.class*",
+                    |    "recursive": true,
+                    |    "includeResources": true,
+                    |    "testTasksAndStages": {"test":"Unit Tests", "junitPlatformTest":"Unit Tests", "integrationTest":"Integration Tests"},
+                    |    "executionType": "full",
+                    |    "logEnabled": true,
+                    |    "logLevel": "INFO",
+                    |    "logToFile": true,
+                    |    "logToConsole": true
+                    |}
+                '''.stripMargin().stripIndent()
+                sh '''
+                    cat slgradle.json
+                '''
             }
         }
         stage('Build and Unit Tests') {
