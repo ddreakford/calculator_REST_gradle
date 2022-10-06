@@ -21,10 +21,10 @@ pipeline {
                 echo "${STAGE_NAME}"
                 sh '''
                     rm -rf sealights && mkdir sealights
-                    wget -nv https://agents.sealights.co/sealights-java/sealights-java-latest.zip && \
-                        unzip -o -d sealights sealights-java-latest.zip
+                    wget -nv https://agents.sealights.co/sealights-java/sealights-java-latest.zip
+                    unzip -o -d sealights sealights-java-latest.zip
                     rm sealights-java-latest.zip
-                    echo “SeaLights agent version is:” `cat sealights/sealights-java-version.txt` “\n”
+                    echo "SeaLights agent version is:" `cat sealights/sealights-java-version.txt` "\n"
                     echo -n "$SL_TOKEN" > sealights/sltoken.txt
                     ls -l sealights
                 '''
