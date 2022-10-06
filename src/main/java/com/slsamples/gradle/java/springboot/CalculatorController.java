@@ -76,6 +76,7 @@ public class CalculatorController {
     }
 
     private double add(double num1, double num2) {
+        // Modified this method
         return num1 + num2;
     }
 
@@ -84,6 +85,7 @@ public class CalculatorController {
     }
 
     private double multiply(double num1, double num2) {
+        // Modified this method
         return num1 * num2;
     }
 
