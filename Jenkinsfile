@@ -30,11 +30,11 @@ pipeline {
                 '''
                 writeFile file: 'slgradle.json', text: '''\
                     |{
-                    |    "tokenFile": "sealights/sltoken-dev-cs.txt",
+                    |    "tokenFile": "sealights/sltoken.txt",
                     |    "createBuildSessionId": true,
                     |    "appName": "Calculator-REST-Jenkins-DD",
                     |    "branchName": "main",
-                    |    "buildName": "SL_Timestamp",
+                    |    "buildName": "2.${BUILD_NUMBER}",
                     |    "packagesIncluded": "*com.slsamples.gradle.java.springboot*",
                     |    "packagesExcluded": "",
                     |    "filesIncluded": "*.class",
