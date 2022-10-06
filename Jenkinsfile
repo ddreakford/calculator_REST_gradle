@@ -30,6 +30,10 @@ pipeline {
                     ls -l sealights
                 '''
 
+                sh '''
+                    cat sealights/sltoken.txt
+                '''
+
                 writeFile file: 'slgradle-gen.json', text: '''\
                     |{
                     |    "tokenFile": "sealights/sltoken.txt",
