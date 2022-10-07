@@ -21,5 +21,3 @@ gradle/wrapper/gradle-wrapper.jar
 # SeaLights agent and build id files
 sealights/
 buildSessionId.txt
-logs/
-logs-local-listener/
