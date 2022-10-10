@@ -47,22 +47,21 @@ pipeline {
                 sh '''
                     gradle classes testNGClasses
                     pwd
-                    ls -l
-                    ls -l */main/*.class
+                    ls -l build/classes/java/**
                 '''
             }
         }
         stage('Scan App Build') {
             steps {
                 echo "${STAGE_NAME}"
-                sh '''
+                sh """
                     java -Dsl.ignoreCertificateErrors=true  -jar sealights/sl-build-scanner.jar -scan \
                         -tokenfile sealights/sltoken.txt \
                         -buildsessionidfile sealights/buildSessionId.txt \
-                        -workspacepath "./build" -r \
-                        -fi "*/main/*/*.class" \
-                        -fe "*/test*/*.class"
-                '''
+                        -workspacepath build -r \
+                        -fi 'build/classes/java/main/*.class' \
+                        -fe 'build/classes/java/test*/*.class'
+                """
             }
         }
         stage('Open Test Stage') {
