@@ -52,6 +52,7 @@ pipeline {
         }
         stage('Scan App Build') {
             steps {
+                echo "${STAGE_NAME}"
                 // sh '''
                 //     ls -l build/classes/java/main/**/*.class
                 // '''
