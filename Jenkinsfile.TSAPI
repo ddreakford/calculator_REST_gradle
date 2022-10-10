@@ -31,6 +31,7 @@ pipeline {
         }
         stage('Create SL Build Session') {
             steps {
+                echo "${STAGE_NAME}"
                 sh """
                     java -Dsl.ignoreCertificateErrors=true -jar sealights/sl-build-scanner.jar -config \
                         -tokenfile sealights/sltoken.txt \
@@ -44,6 +45,7 @@ pipeline {
         }
         stage('Build App and Tests') {
             steps {
+                echo "${STAGE_NAME}"
                 sh "gradle classes testNGClasses"
             }
         }
@@ -56,8 +58,7 @@ pipeline {
                         -tokenfile sealights/sltoken.txt \
                         -buildsessionidfile sealights/buildSessionId.txt \
                         -workspacepath build -r \
-                        -fi '*/main/*.class' \
-                        -fe '*/test*'
+                        -fi '*/main/*.class'
                 """
             }
         }
