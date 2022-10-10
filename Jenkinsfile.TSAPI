@@ -31,15 +31,15 @@ pipeline {
         }
         stage('Create SL Build Session') {
             steps {
-                sh '''
+                sh """
                     java -Dsl.ignoreCertificateErrors=true -jar sealights/sl-build-scanner.jar -config \
                         -tokenfile sealights/sltoken.txt \
-                        -appname "Calculator-REST-TSAPI" \
-                        -branchname "main" \
-                        -buildname "1.0.${env.BUILD_NUMBER}" \
-                        -pi "*com.slsamples.gradle.java.springboot*" \
+                        -appname Calculator-REST-TSAPI \
+                        -branchname main \
+                        -buildname 1.0.${BUILD_NUMBER} \
+                        -pi '*com.slsamples.gradle.java.springboot*' \
                         -buildsessionidfile sealights/buildSessionId.txt
-                '''
+                """
             }
         }
         stage('Build App and Tests') {
