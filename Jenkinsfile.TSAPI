@@ -53,7 +53,7 @@ pipeline {
             steps {
                 echo "${STAGE_NAME}"
                 sh """
-                    java -Dsl.ignoreCertificateErrors=true -Dsl.log.toConsole=true -Dsl.log.level=info \
+                    java -Dsl.ignoreCertificateErrors=true -Dsl.log.toFile=true -Dsl.log.level=info \
                         -jar sealights/sl-build-scanner.jar -scan \
                         -tokenfile sealights/sltoken.txt \
                         -buildsessionidfile sealights/buildSessionId.txt \
