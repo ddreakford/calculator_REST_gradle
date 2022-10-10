@@ -12,7 +12,7 @@ pipeline {
                 git branch: params.BRANCH, url: 'https://github.com/ddreakford/calculator_REST_gradle.git'
             }
         }
-        stage('Install/Configure SeaLights agent') {
+        stage('Install/Configure SeaLights') {
             steps {
                 echo "${STAGE_NAME}"
                 withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
@@ -52,13 +52,16 @@ pipeline {
         stage('Scan App Build') {
             steps {
                 sh '''
-                    java -Dsl.ignoreCertificateErrors=true  -jar sealights/sl-build-scanner.jar -scan \
-                        -tokenfile sealights/sltoken.txt \
-                        -buildsessionidfile sealights/buildSessionId.txt \
-                        -workspacepath "." -r \
-                        -fi "build/classes/java/main/**/*.class" \
-                        -fe "build/classes/java/test**/*.class"
+                    ls -l build/classes/java/main/**/*.class
                 '''
+                // sh '''
+                //     java -Dsl.ignoreCertificateErrors=true  -jar sealights/sl-build-scanner.jar -scan \
+                //         -tokenfile sealights/sltoken.txt \
+                //         -buildsessionidfile sealights/buildSessionId.txt \
+                //         -workspacepath "." -r \
+                //         -fi "build/classes/java/main/**/*.class" \
+                //         -fe "build/classes/java/test**/*.class"
+                // '''
             }
         }
         stage('Open Test Stage') {
