@@ -7,7 +7,7 @@
 SAVE_JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS}"
 JAVA_TOOL_OPTIONS=
 
-# Report the build to SeaLights
+# Create the build session
 java -Dsl.ignoreCertificateErrors=true -jar ${LIBS_DIR}/sealights/sl-build-scanner.jar -config \
     -tokenfile ${LIBS_DIR}/sealights/sltoken-dev-cs.txt \
     -appname "${APP_NAME}" \
@@ -16,7 +16,7 @@ java -Dsl.ignoreCertificateErrors=true -jar ${LIBS_DIR}/sealights/sl-build-scann
     -pi "*${PACKAGE_PREFIX}.*" \
     -buildsessionidfile ${LIBS_DIR}/sealights/buildSessionId.txt
 
-# Scan the application
+# Scan the application and report the build structure to SeaLights
 java -Dsl.ignoreCertificateErrors=true  -jar ${LIBS_DIR}/sealights/sl-build-scanner.jar -scan \
     -tokenfile ${LIBS_DIR}/sealights/sltoken-dev-cs.txt \
     -buildsessionidfile ${LIBS_DIR}/sealights/buildSessionId.txt \
