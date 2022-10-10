@@ -8,16 +8,35 @@ plugins {
 }
 
 group = 'io.sealights.samples.gradle.java'
-version = '0.0.1-SNAPSHOT'
+version = '0.2.0-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
 }
 
+// Source for the testNG tests
+sourceSets {
+    testNG {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+        java {
+        }
+    }
+}
+
+configurations {
+    testNGImplementation.extendsFrom(testImplementation)
+    testNGRuntimeOnly.extendsFrom(testRuntimeOnly)
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	testNGImplementation 'org.springframework.boot:spring-boot-starter-web'
+	testNGImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testNGImplementation group: 'org.testng', name: 'testng', version: '6.14.3'
 }
 
 test {
@@ -31,3 +50,35 @@ test {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+task testNG(type: Test) {
+    description = "Run TestNG tests"
+    group = "verification"
+    testClassesDirs = sourceSets.testNG.output.classesDirs
+    classpath = sourceSets.testNG.runtimeClasspath
+    testLogging {
+        events TestLogEvent.FAILED,
+               TestLogEvent.PASSED,
+               TestLogEvent.SKIPPED
+    }
+}
+
+tasks.named('testNG') {
+		useTestNG() {}
+}
+
+task printSourceSetInformation(){
+    doLast{
+        sourceSets.each { srcSet ->
+            println "["+srcSet.name+"]"
+            print "-->Source directories: "+srcSet.allJava.srcDirs+"\n"
+            print "-->Output directories: "+srcSet.output.classesDirs.files+"\n"
+            // print "-->Compile classpath:\n"
+            // srcSet.compileClasspath.files.each { 
+            //     print "  "+it.path+"\n"
+            // }
+            println ""
+        }
+    }
+}
+
