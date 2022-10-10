@@ -36,7 +36,7 @@ pipeline {
                         -tokenfile sealights/sltoken.txt \
                         -appname "Calculator-REST-TSAPI" \
                         -branchname "main" \
-                        -buildname "SL_TIMESTAMP" \
+                        -buildname "1.0.${env.BUILD_NUMBER}" \
                         -pi "*com.slsamples.gradle.java.springboot*" \
                         -buildsessionidfile sealights/buildSessionId.txt
                 '''
@@ -46,24 +46,23 @@ pipeline {
             steps {
                 sh '''
                     gradle classes testNGClasses
+                    pwd
                     ls -l
+                    ls -l */main/*.class
                 '''
             }
         }
         stage('Scan App Build') {
             steps {
                 echo "${STAGE_NAME}"
-                // sh '''
-                //     ls -l build/classes/java/main/**/*.class
-                // '''
-                // sh '''
-                //     java -Dsl.ignoreCertificateErrors=true  -jar sealights/sl-build-scanner.jar -scan \
-                //         -tokenfile sealights/sltoken.txt \
-                //         -buildsessionidfile sealights/buildSessionId.txt \
-                //         -workspacepath "." -r \
-                //         -fi "build/classes/java/main/**/*.class" \
-                //         -fe "build/classes/java/test**/*.class"
-                // '''
+                sh '''
+                    java -Dsl.ignoreCertificateErrors=true  -jar sealights/sl-build-scanner.jar -scan \
+                        -tokenfile sealights/sltoken.txt \
+                        -buildsessionidfile sealights/buildSessionId.txt \
+                        -workspacepath "./build" -r \
+                        -fi "*/main/*/*.class" \
+                        -fe "*/test*/*.class"
+                '''
             }
         }
         stage('Open Test Stage') {
