@@ -57,14 +57,15 @@ pipeline {
                     echo "----------------------------"
                     java -jar sealights/sl-build-scanner.jar -gradle -configfile slgradle-gen.json -workspacepath .
                     cat build.gradle
-                    echo "----------------------------"
-                    gradle clean build
                 '''
             }
         }
         stage('Build and Unit Tests') {
             steps {
                 echo "${STAGE_NAME}"
+                sh '''
+                    gradle clean build
+                '''
             }
         }
         stage('Start local REST Calculator') {
