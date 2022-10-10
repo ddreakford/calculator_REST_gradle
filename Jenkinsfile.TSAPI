@@ -46,14 +46,15 @@ pipeline {
             steps {
                 sh '''
                     gradle classes testNGClasses
+                    ls -l
                 '''
             }
         }
         stage('Scan App Build') {
             steps {
-                sh '''
-                    ls -l build/classes/java/main/**/*.class
-                '''
+                // sh '''
+                //     ls -l build/classes/java/main/**/*.class
+                // '''
                 // sh '''
                 //     java -Dsl.ignoreCertificateErrors=true  -jar sealights/sl-build-scanner.jar -scan \
                 //         -tokenfile sealights/sltoken.txt \
