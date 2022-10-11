@@ -81,8 +81,9 @@ pipeline {
                         '''
                         String responseTxt = readFile(file: 'sealights/response.txt')
                         Map responseMap = new groovy.json.JsonSlurper().parseText(responseTxt)
-                        println('Test Session ID:' + responseMap.data.testSessionId)
-                        writeFile(file: 'sealights/session_id.txt', text: responseMap.data.testSessionId)
+                        String sessionId = responseMap.data.testSessionId
+                        println('Test Session ID: ' + sessionId)
+                        writeFile(file: 'sealights/session_id.txt', text: sessionId)
                     }
                 }
             }
