@@ -77,8 +77,12 @@ pipeline {
                                 -H "Content-Type: application/json" \
                                 -d "{\\"labId\\":\\"${LABID}\\",\\"testStage\\":\\"${TEST_STAGE}\\",\\"bsid\\":\\"${BSID}\\",\\"sessionTimeout\\":10000}"\
                                 `
-                            echo $RESPONSE
+                            echo $RESPONSE > sealights/response.txt
                         '''
+                        String responseTxt = readFile(file: 'sealights/response.txt')
+                        Map responseMap = new groovy.json.JsonSlurper().parseText(responseTxt)
+                        println('Test Session ID:' + responseMap.data.testSessionId)
+                        writeFile(file: 'sealights/session_id.txt', text: responseMap.data.testSessionId)
                     }
                 }
             }
@@ -98,11 +102,12 @@ pipeline {
             steps {
                 echo "${STAGE_NAME}"
                 withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
-                    sh """
-                        curl -X DELETE "https://$SL_DOMAIN/sl-api/v1/test-sessions/$TEST_SESSION_ID" \
-                            -H "Authorization: Bearer $SL_TOKEN" \
+                    sh '''
+                        export TEST_SESSION_ID=`cat sealights/session_id.txt`
+                        curl -X DELETE "https://${SL_DOMAIN}/sl-api/v1/test-sessions/${TEST_SESSION_ID}" \
+                            -H "Authorization: Bearer ${SL_TOKEN}" \
                             -H "Content-Type: application/json"
-                    """
+                    '''
                 }
             }
         }
