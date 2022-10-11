@@ -16,7 +16,6 @@ pipeline {
         }
         stage('Install/Configure SeaLights') {
             steps {
-                echo "${STAGE_NAME}"
                 withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
                     sh '''
                         rm -rf sealights && mkdir sealights
@@ -33,7 +32,6 @@ pipeline {
         }
         stage('Create SL Build Session') {
             steps {
-                echo "${STAGE_NAME}"
                 sh """
                     java -Dsl.ignoreCertificateErrors=true -jar sealights/sl-build-scanner.jar -config \
                         -tokenfile sealights/sltoken.txt \
@@ -47,13 +45,11 @@ pipeline {
         }
         stage('Build App and Tests') {
             steps {
-                echo "${STAGE_NAME}"
                 sh "gradle classes testNGClasses"
             }
         }
         stage('Scan App Build') {
             steps {
-                echo "${STAGE_NAME}"
                 sh """
                     java -Dsl.ignoreCertificateErrors=true -Dsl.log.toFile=true -Dsl.log.level=info \
                         -jar sealights/sl-build-scanner.jar -scan \
@@ -66,7 +62,6 @@ pipeline {
         }
         stage('Open Test Stage') {
             steps {
-                echo "${STAGE_NAME}"
                 withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
                     script {
                         sh '''
@@ -90,7 +85,6 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                echo "${STAGE_NAME}"
                 sh "gradle testNG"
             }
         }
@@ -101,7 +95,6 @@ pipeline {
         }
         stage('Close Test Stage') {
             steps {
-                echo "${STAGE_NAME}"
                 withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
                     sh '''
                         export TEST_SESSION_ID=`cat sealights/session_id.txt`
