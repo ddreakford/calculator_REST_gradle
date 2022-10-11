@@ -1,5 +1,5 @@
 #!/bin/sh
-export DOMAIN=dev-cs-gw.dev.sealights.co
+export DOMAIN=#####
 export SEALIGHTS_AGENT_TOKEN=(cat sealights/sltoken-dev-cs.txt)
 export TEST_STAGE="API Tests"
 export LAB_ID=(cat buildSessionId.txt)
@@ -20,7 +20,6 @@ curl -X POST "https://$DOMAIN/sl-api/v1/test-sessions" \
 # (This is an alternative to sending test events during test execution)
 
 # Close/Delete Test Session
-export TEST_SESSION_ID=42e7272e-297a-4521-846b-79b8b08d3b02
 curl -X DELETE "https://$DOMAIN/sl-api/v1/test-sessions/$TEST_SESSION_ID" \
   -H "Authorization: Bearer $SEALIGHTS_AGENT_TOKEN" \
   -H "Content-Type: application/json" 
