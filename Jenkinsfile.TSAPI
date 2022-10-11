@@ -3,6 +3,8 @@ pipeline {
 
     parameters {
         string(name: 'BRANCH', defaultValue: 'main', description: 'The branch to locally clone, build and onboard to SeaLights')
+        string(name: 'SL_DOMAIN', defaultValue: '', description: 'Your SeaLights instance domain')
+        string(name: 'TEST_STAGE', defaultValue: 'API Tests', description: 'The SeaLights test stage under which to run the tests')
     }
 
     stages {
@@ -65,14 +67,23 @@ pipeline {
         stage('Open Test Stage') {
             steps {
                 echo "${STAGE_NAME}"
+                withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
+                    sh """
+                        export BSID=(cat sealights/buildSessionId.txt)
+                        export LABID=(cat sealights/buildSessionId.txt)
+                        curl -X POST https://$SL_DOMAIN/sl-api/v1/test-sessions \
+                            -H "Authorization: Bearer $SL_TOKEN" \
+                            -H "Content-Type: application/json" \
+                            -d "{\"labId\":\"$LABID\",\"testStage\":\"$TEST_STAGE\",\"bsid\":\"$BSID\",\"sessionTimeout\":10000}"
+                            -o sealights/response_data.txt
+                    """
+                }
             }
         }
         stage('Run Tests') {
             steps {
                 echo "${STAGE_NAME}"
-                sh '''
-                    gradle testNG
-                '''
+                sh "gradle testNG"
             }
         }
         stage('Upload Test Results') {
@@ -83,6 +94,13 @@ pipeline {
         stage('Close Test Stage') {
             steps {
                 echo "${STAGE_NAME}"
+                withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
+                    sh """
+                        curl -X DELETE "https://$SL_DOMAIN/sl-api/v1/test-sessions/$TEST_SESSION_ID" \
+                            -H "Authorization: Bearer $SL_TOKEN" \
+                            -H "Content-Type: application/json"
+                    """
+                }
             }
         }
     }
