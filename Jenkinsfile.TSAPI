@@ -79,8 +79,9 @@ pipeline {
                                 `
                             echo $RESPONSE > sealights/response.txt
                         '''
-                        String responseTxt = readFile(file: 'sealights/response.txt')
-                        Map responseMap = new groovy.json.JsonSlurper().parseText(responseTxt)
+                        // String responseTxt = readFile(file: 'sealights/response.txt')
+                        def responseMap = readJSON(file: 'sealights/response.txt')
+                        // Map responseMap = new groovy.json.JsonSlurper().parseText(responseTxt)
                         String sessionId = responseMap.data.testSessionId
                         println('Test Session ID: ' + sessionId)
                         writeFile(file: 'sealights/session_id.txt', text: sessionId)
