@@ -70,12 +70,14 @@ pipeline {
                 withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
                     script {
                         def BSID = readFile(file: 'sealights/buildSessionId.txt')
+                        echo "${BSID}"
                         def LABID = BSID
+                        echo "${BSID}"
                         sh '''
                             curl -v POST https://${SL_DOMAIN}/sl-api/v1/test-sessions \
                                 -H "Authorization: Bearer ${SL_TOKEN}" \
                                 -H "Content-Type: application/json" \
-                                -d "\"{\"labId\":\"${LABID}\",\"testStage\":\"$TEST_STAGE\",\"bsid\":\"${BSID}\",\"sessionTimeout\":10000}\"" \
+                                -d \\"\\"{\\"labId\\":\\"${LABID}\\",\\"testStage\\":\\"$TEST_STAGE\\",\\"bsid\\":\\"${BSID}\\",\\"sessionTimeout\\":10000}\\"" \
                                 -o sealights/response_data.txt
                         '''
                     }
