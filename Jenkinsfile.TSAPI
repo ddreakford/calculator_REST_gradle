@@ -69,10 +69,6 @@ pipeline {
                 echo "${STAGE_NAME}"
                 withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
                     script {
-                        // def BSID = readFile(file: 'sealights/buildSessionId.txt')
-                        // echo "${BSID}"
-                        // def LABID = BSID
-                        // echo "${BSID}"
                         sh '''
                             export LABID=`cat sealights/buildSessionId.txt`
                             export BSID=`cat sealights/buildSessionId.txt`
