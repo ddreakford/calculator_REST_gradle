@@ -67,14 +67,14 @@ pipeline {
         stage('Open Test Stage') {
             steps {
                 echo "${STAGE_NAME}"
+                def BSID = readFile(file: 'sealights/buildSessionId.txt')
+                def LABID = BSID
                 withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
                     sh '''
-                        export BSID=(cat sealights/buildSessionId.txt)
-                        export LABID=(cat sealights/buildSessionId.txt)
-                        curl -v -X POST https://${SL_DOMAIN}/sl-api/v1/test-sessions \
+                        curl -v POST https://${SL_DOMAIN}/sl-api/v1/test-sessions \
                             -H "Authorization: Bearer ${SL_TOKEN}" \
                             -H "Content-Type: application/json" \
-                            -d "{\"labId\":\"$LABID\",\"testStage\":\"$TEST_STAGE\",\"bsid\":\"$BSID\",\"sessionTimeout\":10000}" \
+                            -d "\"{\"labId\":\"${LABID}\",\"testStage\":\"$TEST_STAGE\",\"bsid\":\"${BSID}\",\"sessionTimeout\":10000}\"" \
                             -o sealights/response_data.txt
                     '''
                 }
