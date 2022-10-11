@@ -71,7 +71,7 @@ pipeline {
                     sh """
                         export BSID=(cat sealights/buildSessionId.txt)
                         export LABID=(cat sealights/buildSessionId.txt)
-                        curl -X POST https://$SL_DOMAIN/sl-api/v1/test-sessions \
+                        curl -v -X POST https://$SL_DOMAIN/sl-api/v1/test-sessions \
                             -H "Authorization: Bearer $SL_TOKEN" \
                             -H "Content-Type: application/json" \
                             -d "{\"labId\":\"$LABID\",\"testStage\":\"$TEST_STAGE\",\"bsid\":\"$BSID\",\"sessionTimeout\":10000}" \
