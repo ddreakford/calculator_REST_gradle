@@ -30,13 +30,13 @@ pipeline {
                     cat sealights/sltoken.txt
                 '''
 
-                writeFile file: 'slgradle-gen.json', text: '''\
+                writeFile file: 'slgradle-gen.json', text: """\
                     |{
                     |    "tokenFile": "sealights/sltoken.txt",
                     |    "createBuildSessionId": true,
                     |    "appName": "Calculator-REST-Jenkins-DD",
                     |    "branchName": "main",
-                    |    "buildName": "SL_Timestamp",
+                    |    "buildName": "2.0.${BUILD_NUMBER}",
                     |    "packagesIncluded": "*com.slsamples.gradle.java.springboot*",
                     |    "packagesExcluded": "",
                     |    "filesIncluded": "*.class",
@@ -50,7 +50,7 @@ pipeline {
                     |    "logToFile": true,
                     |    "logToConsole": false
                     |}
-                '''.stripMargin().stripIndent()
+                """.stripMargin().stripIndent()
 
                 sh '''
                     cat slgradle-gen.json
