@@ -73,8 +73,10 @@ pipeline {
             steps {
                 // Create/start a container with SeaLights monitoring
                 String APP_IMAGE_SPEC = "${DOCKER_REPO}/${APP_IMAGE_NAME}:${BUILD_NUMBER}"
-                docker build -f Dockerfile.qa -t ${APP_IMAGE_SPEC} .
-                docker run -d -p 8091:8091 $APP_IMAGE_SPEC
+                sh """
+                    docker build -f Dockerfile.qa -t ${APP_IMAGE_SPEC} .
+                    docker run -d -p 8091:8091 $APP_IMAGE_SPEC
+                """
             }
         }
     }
