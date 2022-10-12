@@ -6,6 +6,10 @@ pipeline {
         string(name: 'DOCKER_REPO', defaultValue: 'dwaynedreakford', description: 'Your Docker repo')
         string(name: 'APP_IMAGE_NAME', defaultValue: 'calculator_rest', description: 'Name of the image to be deployed')
     }
+    environment {
+        SL_APP_NAME = "Calculator-REST-Jenkins-DD"
+        SL_BUILD_NAME = "2.0.${BUILD_NUMBER}"
+    }
 
     stages {
         stage('SCM (Git)') {
@@ -16,8 +20,9 @@ pipeline {
         }
         stage('Install/Configure SeaLights agent') {
             steps {
-                echo "${STAGE_NAME}"
                 withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
+                    // Download the agent
+                    // Save the agent token in a file
                     sh '''
                         rm -rf sealights && mkdir sealights
                         wget -nv https://agents.sealights.co/sealights-java/sealights-java-latest.zip
@@ -32,13 +37,16 @@ pipeline {
                     cat sealights/sltoken.txt
                 '''
 
+                // Create the config file that will be used to add
+                // SeaLights dependencies to build.gradle on the fly
                 writeFile file: 'slgradle-gen.json', text: """\
                     |{
                     |    "tokenFile": "sealights/sltoken.txt",
-                    |    "createBuildSessionId": true,
-                    |    "appName": "Calculator-REST-Jenkins-DD",
-                    |    "branchName": "main",
-                    |    "buildName": "2.0.${BUILD_NUMBER}",
+                    |    "createBuildSessionId": false,
+                    |    "buildSessionIdFile": "sealights/buildSessionId.txt",
+                    |    "appName": "${SL_APP_NAME}",
+                    |    "branchName": "${BRANCH}",
+                    |    "buildName": "${SL_BUILD_NAME}",
                     |    "packagesIncluded": "*com.slsamples.gradle.java.springboot*",
                     |    "packagesExcluded": "",
                     |    "filesIncluded": "*.class",
@@ -53,17 +61,39 @@ pipeline {
                     |    "logToConsole": false
                     |}
                 """.stripMargin().stripIndent()
-
+                
+                // Add SeaLights dependencies to build.gradle
                 sh '''
                     cat slgradle-gen.json
                     echo "----------------------------"
                     java -jar sealights/sl-build-scanner.jar -gradle -configfile slgradle-gen.json -workspacepath .
+                    echo "----------------------------"
                     cat build.gradle
                 '''
             }
         }
+
+        stage('Create the SL Build Session') {
+            steps {
+                // buildSessionId.txt is written by this step
+                sh """
+                    java -Dsl.ignoreCertificateErrors=true -jar sealights/sl-build-scanner.jar -config \
+                        -tokenfile sealights/sltoken.txt \
+                        -appname ${SL_APP_NAME} \
+                        -branchname ${BRANCH} \
+                        -buildname "${SL_BUILD_NAME}" \
+                        -pi '*com.slsamples.gradle.java.springboot*' \
+                        -buildsessionidfile sealights/buildSessionId.txt
+                    cat sealights/buildSessionId.txt
+                """
+            }
+        }
+
         stage('Build and Unit Test') {
             steps {
+                // Each module built by gradle will be scanned
+                // The build map will be reported to SeaLights
+                // Any Unit and Integration tests will be monitored
                 sh '''
                     gradle clean build
                 '''
