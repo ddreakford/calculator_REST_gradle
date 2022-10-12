@@ -47,8 +47,8 @@ pipeline {
                     |    "executionType": "full",
                     |    "logEnabled": true,
                     |    "logLevel": "INFO",
-                    |    "logToFile": false,
-                    |    "logToConsole": true
+                    |    "logToFile": true,
+                    |    "logToConsole": false
                     |}
                 '''.stripMargin().stripIndent()
 
