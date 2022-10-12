@@ -1,0 +1,20 @@
+# Create image for Test/QA with monitoring by SeaLights
+
+# Base image was created via this Dockerfile:
+# https://github.com/oracle/docker-images/blob/main/OracleJava/8/Dockerfile
+FROM        oracle/jdk:18
+
+# Base dir for app and SeaLights libs
+ENV         LIBS_DIR="/usr/local/lib"
+
+# Add application jar
+COPY        build/libs/rest-calculator-0.2.0-SNAPSHOT.jar ${LIBS_DIR}/
+EXPOSE      8091
+
+# Add Sealights Java agent and supporting script
+COPY        sealights/* ${LIBS_DIR}/sealights/
+COPY        monitor_java_container.sh ${LIBS_DIR}/sealights/
+
+# This starts the app with the SeaLights test listener
+# configured as "-javaagent"
+ENTRYPOINT ${LIBS_DIR}/sealights/monitor_java_container.sh

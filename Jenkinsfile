@@ -3,6 +3,8 @@ pipeline {
 
     parameters {
         string(name: 'BRANCH', defaultValue: 'main', description: 'The branch to locally clone, build and onboard to SeaLights')
+        string(name: 'DOCKER_REPO', defaultValue: 'dwaynedreakford', description: 'Your Docker repo')
+        string(name: 'APP_IMAGE_NAME', defaultValue: 'calculator_rest', description: 'Name of the image to be deployed')
     }
 
     stages {
@@ -60,20 +62,19 @@ pipeline {
                 '''
             }
         }
-        stage('Build and Unit Tests') {
+        stage('Build and Unit Test') {
             steps {
-                echo "${STAGE_NAME}"
                 sh '''
                     gradle clean build
                 '''
             }
         }
-        stage('Start local REST Calculator') {
-            when { 
-                environment name: 'START_CALCULATOR', value: 'YES'
-            }
+        stage('Deploy to QA') {
             steps {
-                echo "${STAGE_NAME}"
+                // Create/start a container with SeaLights monitoring
+                String APP_IMAGE_SPEC = "${DOCKER_REPO}/${APP_IMAGE_NAME}:${BUILD_NUMBER}"
+                docker build -f Dockerfile.qa -t ${APP_IMAGE_SPEC} .
+                docker run -d -p 8091:8091 $APP_IMAGE_SPEC
             }
         }
     }
