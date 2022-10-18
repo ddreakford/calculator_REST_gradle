@@ -61,10 +61,11 @@ task testNG(type: Test) {
                TestLogEvent.PASSED,
                TestLogEvent.SKIPPED
     }
-}
-
-tasks.named('testNG') {
-		useTestNG() {}
+    useTestNG() {
+        options {
+            listeners.add("com.slsamples.testng.listener.CustomTestListener")
+        }
+    }
 }
 
 task printSourceSetInformation(){
