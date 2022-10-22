@@ -95,7 +95,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
                     sh '''
                         export TEST_SESSION_ID=`cat sealights/session_id.txt`
-                        curl curl -s POST https://${SL_DOMAIN}/sl-api/v1/test-sessions/${TEST_SESSION_ID}" \
+                        curl curl -s POST "https://${SL_DOMAIN}/sl-api/v1/test-sessions/${TEST_SESSION_ID}" \
                             -H "Authorization: Bearer ${SL_TOKEN}" \
                             -H "Content-Type: application/json" \
                             -d "@test_results.json"
