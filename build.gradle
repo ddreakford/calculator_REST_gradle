@@ -36,7 +36,8 @@ dependencies {
 
 	testNGImplementation 'org.springframework.boot:spring-boot-starter-web'
 	testNGImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testNGImplementation group: 'org.testng', name: 'testng', version: '6.14.3'
+	testNGImplementation 'org.testng:testng:6.14.3'
+	testNGImplementation 'com.google.code.gson:gson:2.9.1'
 }
 
 test {
