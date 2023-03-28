@@ -20,6 +20,7 @@ gradle/wrapper/gradle-wrapper.jar
 
 # SeaLights agent and build id files
 sealights/
+sl-cd-agent/
 buildSessionId.txt
 logs*/
 
