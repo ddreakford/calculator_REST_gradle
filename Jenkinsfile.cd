@@ -4,7 +4,7 @@ pipeline {
     parameters {
         string(name: 'BRANCH', defaultValue: 'main', description: 'The branch to locally clone, build and onboard to SeaLights')
         string(name: 'DOCKER_REPO', defaultValue: 'dwaynedreakford', description: 'Your Docker repo')
-        string(name: 'APP_IMAGE_NAME', defaultValue: 'calculator_rest', description: 'Name of the image to be deployed')
+        string(name: 'APP_IMAGE_NAME', defaultValue: 'calculator_rest_cd', description: 'Name of the image to be deployed')
         string(name: 'SL_LAB_ID', defaultValue: 'integ_main_fb68_CalculatorRESTCDAgent', description: 'SL Integration Build Lab ID')
     }
     environment {
@@ -19,7 +19,7 @@ pipeline {
                 git branch: params.BRANCH, url: 'https://github.com/ddreakford/calculator_REST_gradle.git'
             }
         }
-        
+
         stage('Install/Configure SeaLights agent') {
             steps {
                 withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
