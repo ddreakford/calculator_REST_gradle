@@ -1,0 +1,30 @@
+# Create image for Test/QA with monitoring by SeaLights
+
+# Base image was created via this Dockerfile:
+# https://github.com/oracle/docker-images/blob/main/OracleJava/8/Dockerfile
+FROM        oracle/jdk:18
+
+# Base dir for app and SeaLights libs
+ENV         LIBS_DIR="/usr/local/lib"
+
+# Add application jar
+COPY        build/libs/rest-calculator-0.2.0-SNAPSHOT.jar ${LIBS_DIR}/
+EXPOSE      8091
+
+# Add Sealights Java agent and supporting script
+COPY        sealights/* ${LIBS_DIR}/sealights/
+COPY        monitor_java_cd.sh ${LIBS_DIR}/sealights/
+
+# Set required SL param values at image build time.
+# These are set via Jenkinsfile.cd
+ARG sl_app_name
+ARG sl_build_name
+ARG sl_lab_id
+
+ENV SL_APP_NAME=$sl_app_name
+ENV SL_BUILD_NAME=$sl_build_name
+ENV SL_LAB_ID=$sl_lab_id
+
+# This onboards the app using the SeaLights 
+# Java CD agent
+ENTRYPOINT ${LIBS_DIR}/sealights/monitor_java_cd.sh
