@@ -20,7 +20,7 @@ pipeline {
             }
         }
 
-        stage('Install/Configure SeaLights agent') {
+        stage('Download SeaLights agent') {
             steps {
                 withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
                     // Download the agent
