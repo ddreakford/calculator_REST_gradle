@@ -19,6 +19,7 @@ pipeline {
                 git branch: params.BRANCH, url: 'https://github.com/ddreakford/calculator_REST_gradle.git'
             }
         }
+        
         stage('Install/Configure SeaLights agent') {
             steps {
                 withCredentials([string(credentialsId: 'SL_AGENT_TOKEN', variable: 'SL_TOKEN')]) {
@@ -38,6 +39,7 @@ pipeline {
                 //     cat sealights/sltoken.txt
                 // '''
             }
+        }
 
         stage('Build and Unit Test') {
             steps {
