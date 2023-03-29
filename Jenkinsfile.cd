@@ -37,6 +37,7 @@ pipeline {
                 // sh '''
                 //     cat sealights/sltoken.txt
                 // '''
+            }
 
         stage('Build and Unit Test') {
             steps {
