@@ -5,11 +5,11 @@ pipeline {
         string(name: 'BRANCH', defaultValue: 'main', description: 'The branch to locally clone, build and onboard to SeaLights')
         string(name: 'DOCKER_REPO', defaultValue: 'dwaynedreakford', description: 'Your Docker repo')
         string(name: 'APP_IMAGE_NAME', defaultValue: 'calculator_rest_cd', description: 'Name of the image to be deployed')
-        string(name: 'SL_LAB_ID', defaultValue: 'integ_main_260f_CalculatorRESTCDP', description: 'SL Integration Build Lab ID')
+        string(name: 'SL_LAB_ID', defaultValue: '', description: 'SL Integration Build Lab ID')
     }
     environment {
-        SL_APP_NAME = "Calculator-REST-CDP"
-        SL_BUILD_NAME = "2.0.${BUILD_NUMBER}"
+        SL_COMPONENT_NAME = "rest_calculator_main"
+        SL_COMPONENT_BUILD = "2.0.${BUILD_NUMBER}_CD"
     }
 
     stages {
@@ -56,8 +56,8 @@ pipeline {
                     String APP_IMAGE_SPEC = "${DOCKER_REPO}/${APP_IMAGE_NAME}:${BUILD_NUMBER}"
                     sh """
                         docker build -f Dockerfile.cd -t ${APP_IMAGE_SPEC} \
-                            --build-arg sl_app_name=${SL_APP_NAME} \
-                            --build-arg sl_build_name=${SL_BUILD_NAME} \
+                            --build-arg sl_component_name=${SL_COMPONENT_NAME} \
+                            --build-arg sl_component_build=${SL_COMPONENT_BUILD} \
                             --build-arg sl_lab_id=${SL_LAB_ID} \
                             .
                         docker run --name ${APP_IMAGE_NAME} -d -p 8091:8091 ${APP_IMAGE_SPEC}

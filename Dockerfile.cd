@@ -17,12 +17,12 @@ COPY        monitor_java_cd.sh ${LIBS_DIR}/sealights/
 
 # Set required SL param values at image build time.
 # These are set via Jenkinsfile.cd
-ARG sl_app_name
-ARG sl_build_name
+ARG sl_component_name
+ARG sl_component_build
 ARG sl_lab_id
 
-ENV SL_APP_NAME=$sl_app_name
-ENV SL_BUILD_NAME=$sl_build_name
+ENV SL_COMPONENT_NAME=$sl_component_name
+ENV SL_COMPONENT_BUILD=$sl_component_build
 ENV SL_LAB_ID=$sl_lab_id
 
 # This onboards the app using the SeaLights 
