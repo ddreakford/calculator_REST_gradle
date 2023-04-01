@@ -12,8 +12,8 @@ COPY        build/libs/rest-calculator-0.2.0-SNAPSHOT.jar ${LIBS_DIR}/
 EXPOSE      8091
 
 # Add Sealights Java agent and supporting script
-COPY        sealights/* ${LIBS_DIR}/sealights/
-COPY        monitor_java_cd.sh ${LIBS_DIR}/sealights/
+COPY        sl-cd-agent/* ${LIBS_DIR}/sl-cd-agent/
+COPY        monitor_java_cd.sh ${LIBS_DIR}/sl-cd-agent/
 
 # Set required SL param values at image build time.
 # These are set via Jenkinsfile.cd
@@ -27,4 +27,4 @@ ENV SL_LAB_ID=$sl_lab_id
 
 # This onboards the app using the SeaLights 
 # Java CD agent
-ENTRYPOINT ${LIBS_DIR}/sealights/monitor_java_cd.sh
+ENTRYPOINT ${LIBS_DIR}/sl-cd-agent/monitor_java_cd.sh

@@ -7,8 +7,8 @@ SAVE_JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS}"
 JAVA_TOOL_OPTIONS=
 
 # Scan and monitor the app on deployment
-java -jar -javaagent:$LIBS_DIR/sealights/sl-cd-agent.jar \
-    -Dsl.tokenFile=$LIBS_DIR/sealights/sltoken.txt \
+java -jar -javaagent:$LIBS_DIR/sl-cd-agent/sl-cd-agent.jar \
+    -Dsl.tokenFile=$LIBS_DIR/sl-cd-agent/sltoken.txt \
     -Dsl.appName=$SL_COMPONENT_NAME \
     -Dsl.buildName=$SL_COMPONENT_BUILD \
     -Dsl.labId=$SL_LAB_ID \
