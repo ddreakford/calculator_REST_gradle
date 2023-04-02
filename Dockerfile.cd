@@ -8,7 +8,7 @@ FROM        oracle/jdk:18
 ENV         LIBS_DIR="/usr/local/lib"
 
 # Add application jar
-COPY        build/libs/rest-calculator-0.2.0-SNAPSHOT.jar ${LIBS_DIR}/
+COPY        build/libs/* ${LIBS_DIR}/
 EXPOSE      8091
 
 # Add Sealights Java agent and supporting script
