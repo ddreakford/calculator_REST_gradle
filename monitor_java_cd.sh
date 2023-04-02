@@ -13,6 +13,7 @@ java -jar -javaagent:$LIBS_DIR/sl-cd-agent/sl-cd-agent.jar \
     -Dsl.buildName=$SL_COMPONENT_BUILD \
     -Dsl.labId=$SL_LAB_ID \
     -Dsl.includes="com.slsamples.gradle.java.springboot*" \
+    -Dsl.workspace="$LIBS_DIR" \
     -Dsl.log.level=info \
     -Dsl.log.toConsole=true \
     -Dsl.log.toFile=true -Dsl.log.folder=$LIBS_DIR/sl-cd-agent \
