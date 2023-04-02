@@ -59,7 +59,7 @@ pipeline {
                             --build-arg sl_component_name=${SL_COMPONENT_NAME} \
                             --build-arg sl_component_build=${SL_COMPONENT_BUILD} \
                             --build-arg sl_lab_id=${SL_LAB_ID} \
-                            .
+                            . && \
                         docker run --name ${APP_IMAGE_NAME} -d -p 8091:8091 ${APP_IMAGE_SPEC}
                     """
                 }
