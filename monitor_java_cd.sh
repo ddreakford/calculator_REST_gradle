@@ -15,7 +15,7 @@ java -jar -javaagent:$LIBS_DIR/sl-cd-agent/sl-cd-agent.jar \
     -Dsl.includes="com.slsamples.gradle.java.springboot*" \
     -Dsl.log.level=info \
     -Dsl.log.toConsole=true \
-    -Dsl.log.toFile=true -Dsl.log.folder=sl-cd-agent \
+    -Dsl.log.toFile=true -Dsl.log.folder=$LIBS_DIR/sl-cd-agent/sl-cd-agent \
     $LIBS_DIR/rest-calculator-0.2.0-SNAPSHOT.jar \
     com.slsamples.gradle.java.springboot.Application
 
