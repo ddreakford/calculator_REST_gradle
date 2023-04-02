@@ -45,7 +45,7 @@ pipeline {
             steps {
                 // Unit tests run as normal but monitored by SeaLights
                 sh '''
-                    gradle clean build
+                    gradle clean test
                 '''
             }
         }
