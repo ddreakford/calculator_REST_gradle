@@ -58,7 +58,7 @@ pipeline {
                         docker build -f Dockerfile.cd -t ${APP_IMAGE_SPEC} .
 
                         docker run -v ${WORKSPACE}/sl-cd-agent:/sealights --name ${APP_IMAGE_NAME} \
-                            -e JAVA_TOOL_OPTIONS="-javaagent:/sealights/sl-cd-agent.jar -Dsl.tokenFile=/sealights/sltoken.txt -Dsl.appName=$SL_COMPONENT_NAME -Dsl.buildName=$SL_COMPONENT_BUILD -Dsl.labId=$SL_LAB_ID -Dsl.workspace=/usr/local/lib -Dsl.includes='*com.slsamples.gradle.java.springboot*' -Dsl.log.level=debug -Dsl.log.toConsole=true" \
+                            -e JAVA_TOOL_OPTIONS="-javaagent:/sealights/sl-cd-agent.jar -Dsl.tokenFile=/sealights/sltoken.txt -Dsl.appName=$SL_COMPONENT_NAME -Dsl.buildName=$SL_COMPONENT_BUILD -Dsl.labId=$SL_LAB_ID -Dsl.workspace=/usr/local/lib -Dsl.includes='*com.slsamples.gradle.java.springboot*' -Dsl.log.level=info -Dsl.log.toConsole=true" \
                             -d -p 8091:8091 ${APP_IMAGE_SPEC}
                     """
                 }
