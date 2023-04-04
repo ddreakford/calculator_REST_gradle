@@ -11,20 +11,4 @@ ENV         LIBS_DIR="/usr/local/lib"
 COPY        build/libs/* ${LIBS_DIR}/
 EXPOSE      8091
 
-# Add Sealights Java agent and supporting script
-COPY        sl-cd-agent/* ${LIBS_DIR}/sl-cd-agent/
-COPY        monitor_java_cd.sh ${LIBS_DIR}/sl-cd-agent/
-
-# Set required SL param values at image build time.
-# These are set via Jenkinsfile.cd
-ARG sl_component_name
-ARG sl_component_build
-ARG sl_lab_id
-
-ENV SL_COMPONENT_NAME=$sl_component_name
-ENV SL_COMPONENT_BUILD=$sl_component_build
-ENV SL_LAB_ID=$sl_lab_id
-
-# This onboards the app using the SeaLights 
-# Java CD agent
-ENTRYPOINT ${LIBS_DIR}/sl-cd-agent/monitor_java_cd.sh
+ENTRYPOINT ["java", "-jar", "/usr/local/lib/rest-calculator-0.2.0-SNAPSHOT.jar", "com.slsamples.gradle.java.springboot.Application"]
