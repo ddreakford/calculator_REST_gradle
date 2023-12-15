@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     parameters {
+        string(name: 'TOKEN', defaultValue: 'sl.agent.token', description: 'Name/key of the SL agent token credential')
         string(name: 'BRANCH', defaultValue: 'main', description: 'The branch to locally clone, build and onboard to SeaLights')
         string(name: 'DOCKER_REPO', defaultValue: 'dwaynedreakford', description: 'Your Docker repo')
         string(name: 'APP_IMAGE_NAME', defaultValue: 'calculator_rest', description: 'Name of the image to be deployed')
