@@ -94,6 +94,6 @@ public class CalculatorController {
     }
 
     private double unusedoperation(double num1, double num2) {
-        return 0;
+        return -1;
     }
 }
