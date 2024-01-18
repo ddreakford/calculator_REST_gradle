@@ -2,7 +2,8 @@
 
 # Base image was created via this Dockerfile:
 # https://github.com/oracle/docker-images/blob/main/OracleJava/8/Dockerfile
-FROM        oracle/jdk:18
+# FROM        oracle/jdk:18
+FROM        gozap/oraclejdk8
 
 # Base dir for app and SeaLights libs
 ENV         LIBS_DIR="/usr/local/lib"
