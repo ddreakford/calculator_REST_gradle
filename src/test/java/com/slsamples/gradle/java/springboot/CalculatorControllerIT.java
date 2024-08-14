@@ -20,6 +20,6 @@ public class CalculatorControllerIT {
     @Test
     public void getAdd() throws Exception {
         ResponseEntity<String> response = template.getForEntity("/calculator/+/14/8/", String.class);
-        assertThat(response.getBody()).isEqualTo("14.000 + 8.000 = 22.000");
+        assertThat(response.getBody()).isEqualTo("{\"operand1\": 14, \"operator\": \"+\", \"operand2\": 8, \"result\": 22}");
     }
 }

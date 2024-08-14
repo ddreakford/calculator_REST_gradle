@@ -41,7 +41,7 @@ public class CalculatorController {
         }
 
         // Format the result as JSON with keys: "operand1", "operator", "operand2", "result"
-        return String.format("{\"operand1\": %.3f, \"operator\": \"%s\", \"operand2\": %.3f, \"result\": %.3f}", operand1, op, operand2, result);
+        return String.format("{\"operand1\": %.0f, \"operator\": \"%s\", \"operand2\": %.0f, \"result\": %.0f}", operand1, op, operand2, result);
         // return String.format("%.3f %s %.3f = %.3f", operand1, op, operand2, result);
    }
 

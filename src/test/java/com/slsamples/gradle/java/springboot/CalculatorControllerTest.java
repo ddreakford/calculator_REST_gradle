@@ -26,27 +26,27 @@ public class CalculatorControllerTest {
 	public void getAdd() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/calculator/+/14/8/").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().string(equalTo("14.000 + 8.000 = 22.000")));
+				.andExpect(content().string(equalTo("{\"operand1\": 14, \"operator\": \"+\", \"operand2\": 8, \"result\": 22}")));
 	}
 
 	@Test
 	public void getSubtract() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/calculator/-/58/17/").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().string(equalTo("58.000 - 17.000 = 41.000")));
+				.andExpect(content().string(equalTo("{\"operand1\": 58, \"operator\": \"-\", \"operand2\": 17, \"result\": 41}")));
 	}
 
 	@Test
 	public void getMultiply() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/calculator/*/21/5/").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().string(equalTo("21.000 * 5.000 = 105.000")));
+				.andExpect(content().string(equalTo("{\"operand1\": 21, \"operator\": \"*\", \"operand2\": 5, \"result\": 105}")));
 	}
 
 	@Test
 	public void getDivide() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/calculator/d/3/5/").accept(MediaType.APPLICATION_JSON))
+		mvc.perform(MockMvcRequestBuilders.get("/calculator/d/9/3/").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().string(equalTo("3.000 d 5.000 = 0.600")));
+				.andExpect(content().string(equalTo("{\"operand1\": 9, \"operator\": \"d\", \"operand2\": 3, \"result\": 3}")));
 	}
 }
